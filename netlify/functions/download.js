@@ -1,17 +1,19 @@
 import client from '../../src/lib/db.js';
 
-export async function POST(req) {
+export async function handler(event, context) {
   try {
-    const body = await req.json();
+    if (event.httpMethod !== 'POST') {
+      return { statusCode: 405, body: 'Method Not Allowed' };
+    }
+
+    const body = JSON.parse(event.body);
     const { country } = body;
 
     if (!country) {
-      return new Response(JSON.stringify({ success: false, error: 'Country is required' }), {
-        status: 400,
-      });
+      return { statusCode: 400, body: JSON.stringify({ success: false, error: 'Country is required' }) };
     }
 
-    // Insert or update download count atomically
+    // Insert or update download count
     await client.query(
       `
       INSERT INTO downloads (country, download_count, last_download)
@@ -24,9 +26,9 @@ export async function POST(req) {
       [country]
     );
 
-    return new Response(JSON.stringify({ success: true }), { status: 200 });
+    return { statusCode: 200, body: JSON.stringify({ success: true }) };
   } catch (err) {
     console.error("Download API Error:", err);
-    return new Response(JSON.stringify({ success: false, error: 'Database error' }), { status: 500 });
+    return { statusCode: 500, body: JSON.stringify({ success: false, error: 'Database error' }) };
   }
 }
