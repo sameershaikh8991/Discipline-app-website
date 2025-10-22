@@ -16,7 +16,7 @@ const handleDownload = async () => {
     const country = locationData.country_name || "Unknown";
 
     // Send data to your Neon DB via API route
-    await fetch("/api/contex/download", {
+    await fetch("/.netlify/functions/download", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ country }),
