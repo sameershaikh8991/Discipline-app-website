@@ -14,7 +14,7 @@ export const Headerdata: HeaderItem[] = [
   // { label: "Docs", href: "/documentation" },
 ];
 
-const basePath = process.env.NODE_ENV === "production" ? "/crypto-nextjs" : "";
+const basePath = process.env.NODE_ENV === "production" ? "" : "";
 
 // export const Companiesdata: { imgSrc: string }[] = [
 //   {
