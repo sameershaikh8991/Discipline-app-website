@@ -1,4 +1,4 @@
-import client from '../../../../lib/db.js';
+import client from '../../src/lib/db.js';
 
 export async function POST(req) {
   try {
